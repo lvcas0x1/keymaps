@@ -1,0 +1,706 @@
+{
+  "title": "Keyboard Shortcuts Dashboard",
+  "subtitle": "Karabiner → Hammerspoon → WezTerm → Neovim",
+  "updated": "2026-06-15",
+  "systems": [
+    {
+      "id": "karabiner",
+      "name": "Karabiner-Elements",
+      "badge": "SuperKey",
+      "description": "Global keyboard remapping.",
+      "groups": [
+        {
+          "name": "Modifier Remap",
+          "items": [
+            {
+              "keys": [
+                "Caps Lock"
+              ],
+              "action": "Send Control + Option + Command",
+              "note": "SuperKey"
+            }
+          ]
+        },
+        {
+          "name": "Profile",
+          "items": [
+            {
+              "keys": [
+                "Default profile"
+              ],
+              "action": "ANSI keyboard type; quit confirmation disabled"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hammerspoon",
+      "name": "Hammerspoon",
+      "badge": "macOS Window Management",
+      "description": "Global window layout shortcuts.",
+      "groups": [
+        {
+          "name": "Window Layout",
+          "items": [
+            {
+              "keys": [
+                "Command",
+                "←"
+              ],
+              "action": "Left Half"
+            },
+            {
+              "keys": [
+                "Command",
+                "→"
+              ],
+              "action": "Right Half"
+            },
+            {
+              "keys": [
+                "Command",
+                "↑"
+              ],
+              "action": "Full Screen / Maximize"
+            },
+            {
+              "keys": [
+                "Command",
+                "↓"
+              ],
+              "action": "Center Window"
+            }
+          ]
+        },
+        {
+          "name": "Multi-Monitor Behavior",
+          "items": [
+            {
+              "keys": [
+                "Command",
+                "←/→"
+              ],
+              "action": "Move to half screen; can hop screens when already on the same unit"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wezterm",
+      "name": "WezTerm",
+      "badge": "Ctrl = Terminal",
+      "description": "Terminal tabs and panes.",
+      "groups": [
+        {
+          "name": "Tabs",
+          "items": [
+            {
+              "keys": [
+                "Ctrl",
+                "N"
+              ],
+              "action": "New Tab"
+            },
+            {
+              "keys": [
+                "Ctrl",
+                "W"
+              ],
+              "action": "Close Current Tab",
+              "note": "Ignored if last tab"
+            },
+            {
+              "keys": [
+                "Ctrl",
+                "←"
+              ],
+              "action": "Previous Tab"
+            },
+            {
+              "keys": [
+                "Ctrl",
+                "→"
+              ],
+              "action": "Next Tab"
+            }
+          ]
+        },
+        {
+          "name": "Panes",
+          "items": [
+            {
+              "keys": [
+                "Ctrl",
+                "="
+              ],
+              "action": "Split Below"
+            },
+            {
+              "keys": [
+                "Ctrl",
+                "-"
+              ],
+              "action": "Split Right"
+            },
+            {
+              "keys": [
+                "Ctrl",
+                ","
+              ],
+              "action": "Previous Pane"
+            },
+            {
+              "keys": [
+                "Ctrl",
+                "."
+              ],
+              "action": "Next Pane"
+            },
+            {
+              "keys": [
+                "Ctrl",
+                "Q"
+              ],
+              "action": "Close Current Pane",
+              "note": "Ignored if last pane"
+            }
+          ]
+        },
+        {
+          "name": "Resize",
+          "items": [
+            {
+              "keys": [
+                "Ctrl",
+                "Shift",
+                "↑"
+              ],
+              "action": "Resize Up"
+            },
+            {
+              "keys": [
+                "Ctrl",
+                "Shift",
+                "↓"
+              ],
+              "action": "Resize Down"
+            },
+            {
+              "keys": [
+                "Ctrl",
+                "Shift",
+                "←"
+              ],
+              "action": "Resize Left"
+            },
+            {
+              "keys": [
+                "Ctrl",
+                "Shift",
+                "→"
+              ],
+              "action": "Resize Right"
+            }
+          ]
+        },
+        {
+          "name": "Forwarded Option Keys",
+          "items": [
+            {
+              "keys": [
+                "Option"
+              ],
+              "action": "Forwarded to Neovim for editor tab, window, split, resize, LuaSnip, and ToggleTerm operations"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "neovim",
+      "name": "Neovim",
+      "badge": "Option = Editor",
+      "description": "Editor navigation and plugin shortcuts.",
+      "groups": [
+        {
+          "name": "Tabs",
+          "items": [
+            {
+              "keys": [
+                "Option",
+                "N"
+              ],
+              "action": "New Tab"
+            },
+            {
+              "keys": [
+                "Option",
+                "W"
+              ],
+              "action": "Close Tab"
+            },
+            {
+              "keys": [
+                "Option",
+                "←"
+              ],
+              "action": "Previous Tab"
+            },
+            {
+              "keys": [
+                "Option",
+                "→"
+              ],
+              "action": "Next Tab"
+            }
+          ]
+        },
+        {
+          "name": "Windows / Splits",
+          "items": [
+            {
+              "keys": [
+                "Option",
+                "-"
+              ],
+              "action": "Horizontal Split"
+            },
+            {
+              "keys": [
+                "Option",
+                "="
+              ],
+              "action": "Vertical Split"
+            },
+            {
+              "keys": [
+                "Option",
+                ","
+              ],
+              "action": "Previous Window"
+            },
+            {
+              "keys": [
+                "Option",
+                "."
+              ],
+              "action": "Next Window"
+            },
+            {
+              "keys": [
+                "Option",
+                "Q"
+              ],
+              "action": "Close Window"
+            }
+          ]
+        },
+        {
+          "name": "Resize",
+          "items": [
+            {
+              "keys": [
+                "Option",
+                "Shift",
+                "↑"
+              ],
+              "action": "Grow Height"
+            },
+            {
+              "keys": [
+                "Option",
+                "Shift",
+                "↓"
+              ],
+              "action": "Shrink Height"
+            },
+            {
+              "keys": [
+                "Option",
+                "Shift",
+                "←"
+              ],
+              "action": "Grow Width"
+            },
+            {
+              "keys": [
+                "Option",
+                "Shift",
+                "→"
+              ],
+              "action": "Shrink Width"
+            }
+          ]
+        },
+        {
+          "name": "ToggleTerm",
+          "items": [
+            {
+              "keys": [
+                "Option",
+                "`"
+              ],
+              "action": "Float Terminal #1"
+            },
+            {
+              "keys": [
+                "Option",
+                "\\"
+              ],
+              "action": "Vertical Terminal #2"
+            },
+            {
+              "keys": [
+                "Option",
+                ";"
+              ],
+              "action": "Horizontal Terminal #3"
+            },
+            {
+              "keys": [
+                "Option",
+                "'"
+              ],
+              "action": "Horizontal Terminal #4"
+            },
+            {
+              "keys": [
+                "Esc"
+              ],
+              "action": "Terminal Normal Mode"
+            }
+          ]
+        },
+        {
+          "name": "Completion / Snippets",
+          "items": [
+            {
+              "keys": [
+                "Ctrl",
+                "Space"
+              ],
+              "action": "LSP Completion"
+            },
+            {
+              "keys": [
+                "Tab"
+              ],
+              "action": "Completion Next"
+            },
+            {
+              "keys": [
+                "Shift",
+                "Tab"
+              ],
+              "action": "Completion Previous / Deindent"
+            },
+            {
+              "keys": [
+                "Enter"
+              ],
+              "action": "Completion Confirm"
+            },
+            {
+              "keys": [
+                "Option",
+                "/"
+              ],
+              "action": "LuaSnip Expand"
+            }
+          ]
+        },
+        {
+          "name": "Neo-tree / Telescope",
+          "items": [
+            {
+              "keys": [
+                "Space",
+                "E"
+              ],
+              "action": "Toggle Neo-tree"
+            },
+            {
+              "keys": [
+                "Space",
+                "F",
+                "F"
+              ],
+              "action": "Telescope Find Files"
+            },
+            {
+              "keys": [
+                "Space",
+                "F",
+                "G"
+              ],
+              "action": "Telescope Live Grep"
+            },
+            {
+              "keys": [
+                "Space",
+                "F",
+                "B"
+              ],
+              "action": "Telescope Buffers"
+            },
+            {
+              "keys": [
+                "Space",
+                "F",
+                "H"
+              ],
+              "action": "Telescope Help Tags"
+            }
+          ]
+        },
+        {
+          "name": "DAP",
+          "items": [
+            {
+              "keys": [
+                "F5"
+              ],
+              "action": "DAP Continue"
+            },
+            {
+              "keys": [
+                "F10"
+              ],
+              "action": "DAP Step Over"
+            },
+            {
+              "keys": [
+                "F11"
+              ],
+              "action": "DAP Step Into"
+            },
+            {
+              "keys": [
+                "F12"
+              ],
+              "action": "DAP Step Out"
+            },
+            {
+              "keys": [
+                "Space",
+                "D",
+                "B"
+              ],
+              "action": "Toggle Breakpoint"
+            },
+            {
+              "keys": [
+                "Space",
+                "D",
+                "Shift+B"
+              ],
+              "action": "Conditional Breakpoint"
+            },
+            {
+              "keys": [
+                "Space",
+                "D",
+                "R"
+              ],
+              "action": "Open REPL"
+            },
+            {
+              "keys": [
+                "Space",
+                "D",
+                "L"
+              ],
+              "action": "Run Last"
+            },
+            {
+              "keys": [
+                "Space",
+                "D",
+                "T"
+              ],
+              "action": "Terminate"
+            },
+            {
+              "keys": [
+                "Space",
+                "D",
+                "V"
+              ],
+              "action": "DAP View Toggle"
+            }
+          ]
+        },
+        {
+          "name": "Trouble / Todo",
+          "items": [
+            {
+              "keys": [
+                "Space",
+                "T",
+                "D"
+              ],
+              "action": "Trouble Diagnostics"
+            },
+            {
+              "keys": [
+                "Space",
+                "T",
+                "Shift+D"
+              ],
+              "action": "Trouble Buffer Diagnostics"
+            },
+            {
+              "keys": [
+                "Space",
+                "T",
+                "L"
+              ],
+              "action": "Trouble LSP"
+            },
+            {
+              "keys": [
+                "Space",
+                "T",
+                "Shift+L"
+              ],
+              "action": "Trouble Location List"
+            },
+            {
+              "keys": [
+                "Space",
+                "T",
+                "S"
+              ],
+              "action": "Trouble Symbols"
+            },
+            {
+              "keys": [
+                "Space",
+                "T",
+                "Q"
+              ],
+              "action": "Trouble Quickfix"
+            },
+            {
+              "keys": [
+                "]",
+                "T"
+              ],
+              "action": "Next Todo Comment"
+            },
+            {
+              "keys": [
+                "[",
+                "T"
+              ],
+              "action": "Previous Todo Comment"
+            },
+            {
+              "keys": [
+                "Space",
+                "T",
+                "T"
+              ],
+              "action": "Todo Trouble"
+            },
+            {
+              "keys": [
+                "Space",
+                "T",
+                "Shift+T"
+              ],
+              "action": "Todo Telescope"
+            }
+          ]
+        },
+        {
+          "name": "Markdown / Neogen / Utilities",
+          "items": [
+            {
+              "keys": [
+                "Space",
+                "M",
+                "T"
+              ],
+              "action": "Render Markdown Toggle"
+            },
+            {
+              "keys": [
+                "Space",
+                "M",
+                "N"
+              ],
+              "action": "Render Markdown Buffer Toggle"
+            },
+            {
+              "keys": [
+                "Space",
+                "M",
+                "C"
+              ],
+              "action": "Render Markdown Config"
+            },
+            {
+              "keys": [
+                "Space",
+                "N",
+                "F"
+              ],
+              "action": "Neogen Function Doc"
+            },
+            {
+              "keys": [
+                "Space",
+                "N",
+                "C"
+              ],
+              "action": "Neogen Class Doc"
+            },
+            {
+              "keys": [
+                "Space",
+                "N",
+                "T"
+              ],
+              "action": "Neogen Type Doc"
+            },
+            {
+              "keys": [
+                "Space",
+                "N",
+                "Shift+F"
+              ],
+              "action": "Neogen File Doc"
+            },
+            {
+              "keys": [
+                "Space",
+                "U",
+                "V"
+              ],
+              "action": "Vim Pack Manager"
+            },
+            {
+              "keys": [
+                "Space",
+                "U",
+                "M"
+              ],
+              "action": "Mason"
+            },
+            {
+              "keys": [
+                "Space",
+                "U",
+                "H"
+              ],
+              "action": "CheckHealth"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
