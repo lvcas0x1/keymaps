@@ -1,33 +1,495 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Keyboard Shortcuts Dashboard</title>
-  <link rel="stylesheet" href="./assets/style.css" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Keyboard Shortcuts Dashboard</title>
+<style>
+  :root {
+    --bg: #eff1f5;
+    --bg-mantle: #e6e9ef;
+    --surface: #ffffff;
+    --border: #ccd0da;
+    --border-soft: #dce0e8;
+    --text: #4c4f69;
+    --text-muted: #6c6f85;
+    --text-faint: #9092a8;
+    --accent-karabiner: #d20f39;
+    --accent-karabiner-soft: #f9d7dd;
+    --accent-hammerspoon: #fe640b;
+    --accent-hammerspoon-soft: #ffe1cd;
+    --accent-wezterm: #1e66f5;
+    --accent-wezterm-soft: #dce4fd;
+    --accent-nvim: #40a02b;
+    --accent-nvim-soft: #dcf1d6;
+    --accent-key: #8839ef;
+    --shadow: 0 1px 2px rgba(76, 79, 105, 0.06), 0 8px 24px rgba(76, 79, 105, 0.06);
+  }
+
+  * { box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 76px;
+  }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .mono {
+    font-family: "JetBrains Mono", "JetBrainsMono Nerd Font", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ---------- top nav ---------- */
+
+  .topnav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 12px 28px;
+    background: rgba(239, 241, 245, 0.86);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-soft);
+  }
+
+  .topnav .brand {
+    font-weight: 700;
+    font-size: 0.92rem;
+    letter-spacing: 0.01em;
+    color: var(--text);
+    white-space: nowrap;
+  }
+
+  .topnav nav {
+    display: flex;
+    gap: 4px;
+    margin-left: auto;
+    flex-wrap: wrap;
+  }
+
+  .topnav a {
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 0.86rem;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 999px;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+
+  .topnav a:hover,
+  .topnav a:focus-visible {
+    background: var(--surface);
+    color: var(--text);
+  }
+
+  .topnav a:focus-visible {
+    outline: 2px solid var(--accent-key);
+    outline-offset: 2px;
+  }
+
+  /* ---------- page header ---------- */
+
+  .page-head {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 56px 28px 8px;
+  }
+
+  h1 {
+    font-size: clamp(1.9rem, 4vw, 2.5rem);
+    font-weight: 750;
+    margin: 0 0 20px;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+
+  .stat-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .stat {
+    display: flex;
+    align-items: baseline;
+    gap: 7px;
+    background: var(--surface);
+    border: 1px solid var(--border-soft);
+    border-radius: 10px;
+    padding: 10px 16px;
+    box-shadow: var(--shadow);
+  }
+
+  .stat strong {
+    font-size: 1.3rem;
+    font-weight: 750;
+  }
+
+  .stat span {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
+  .stat.karabiner strong { color: var(--accent-karabiner); }
+  .stat.hammerspoon strong { color: var(--accent-hammerspoon); }
+  .stat.wezterm strong { color: var(--accent-wezterm); }
+  .stat.nvim strong { color: var(--accent-nvim); }
+
+  /* ---------- app sections ---------- */
+
+  main {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 8px 28px 40px;
+  }
+
+  .app-section {
+    padding-top: 44px;
+    scroll-margin-top: 76px;
+  }
+
+  .app-head {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .app-head h2 {
+    font-size: 1.5rem;
+    font-weight: 750;
+    margin: 0;
+    letter-spacing: -0.005em;
+  }
+
+  .app-section.karabiner .app-head h2 { color: var(--accent-karabiner); }
+  .app-section.hammerspoon .app-head h2 { color: var(--accent-hammerspoon); }
+  .app-section.wezterm .app-head h2 { color: var(--accent-wezterm); }
+  .app-section.nvim .app-head h2 { color: var(--accent-nvim); }
+
+  /* Columns (not grid) so cards of very different length -- e.g. a
+     one-row "Neo-tree" card next to a ten-row "Debug / DAP" card --
+     pack tightly instead of sharing a grid row's leftover height. */
+  .category-grid {
+    column-width: 320px;
+    column-gap: 18px;
+  }
+
+  .category {
+    background: var(--surface);
+    border: 1px solid var(--border-soft);
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+    margin: 0 0 18px;
+    overflow: hidden;
+    break-inside: avoid;
+  }
+
+  .category h3 {
+    margin: 0;
+    padding: 14px 20px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border-soft);
+    background: var(--bg-mantle);
+  }
+
+  .row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 11px 20px;
+    border-bottom: 1px solid var(--border-soft);
+  }
+
+  .row:last-child { border-bottom: none; }
+
+  .key {
+    flex: 0 0 auto;
+    min-width: 120px;
+  }
+
+  kbd {
+    display: inline-block;
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 5px 10px;
+    border-radius: 7px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    white-space: nowrap;
+  }
+
+  .karabiner kbd { color: var(--accent-karabiner); border-color: var(--accent-karabiner-soft); }
+  .hammerspoon kbd { color: var(--accent-hammerspoon); border-color: var(--accent-hammerspoon-soft); }
+  .wezterm kbd { color: var(--accent-wezterm); border-color: var(--accent-wezterm-soft); }
+  .nvim kbd { color: var(--accent-nvim); border-color: var(--accent-nvim-soft); }
+  .row .key kbd.leader { color: var(--accent-key); }
+
+  .desc {
+    flex: 1 1 auto;
+    font-size: 0.94rem;
+    min-width: 0;
+  }
+
+  .desc .note {
+    color: var(--text-faint);
+    font-size: 0.82rem;
+    font-style: italic;
+  }
+
+  @media (max-width: 560px) {
+    .row { flex-wrap: wrap; }
+    .key { min-width: 0; }
+    .topnav .brand { display: none; }
+  }
+</style>
 </head>
 <body>
-  <header class="site-header">
-    <div class="header-inner">
-      <div>
-        <h1 id="title">Keyboard Shortcuts Dashboard</h1>
-        <div id="subtitle" class="subtitle">Karabiner → Hammerspoon → WezTerm → Neovim</div>
-        <div id="updated" class="subtitle"></div>
-      </div>
-      <input id="search" class="search" type="search" placeholder="Search shortcuts..." autocomplete="off" />
+
+<div class="topnav">
+  <span class="brand">⌨️ Shortcuts</span>
+  <nav>
+    <a href="#karabiner">Karabiner</a>
+    <a href="#hammerspoon">Hammerspoon</a>
+    <a href="#wezterm">WezTerm</a>
+    <a href="#nvim">Neovim</a>
+  </nav>
+</div>
+
+<header class="page-head">
+  <h1>Keyboard Shortcuts Dashboard</h1>
+  <div class="stat-row">
+    <div class="stat karabiner"><strong>2</strong><span>Karabiner remaps</span></div>
+    <div class="stat hammerspoon"><strong>6</strong><span>Hammerspoon bindings</span></div>
+    <div class="stat wezterm"><strong>13</strong><span>WezTerm bindings</span></div>
+    <div class="stat nvim"><strong>67</strong><span>Neovim mappings</span></div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ===================== KARABINER ===================== -->
+  <section class="app-section karabiner" id="karabiner">
+    <div class="app-head">
+      <h2>Karabiner-Elements</h2>
     </div>
-  </header>
 
-  <main class="container">
-    <nav id="nav" class="nav" aria-label="Sections"></nav>
-    <div id="empty" class="empty">No shortcuts matched your search.</div>
-    <div id="app"></div>
-  </main>
+    <div class="category-grid">
+    <div class="category">
+      <h3>Modifier remap</h3>
+      <div class="row"><div class="key"><kbd>Caps Lock</kbd></div><div class="desc">Remaps to ⌃⌥⌘ (Control + Option + Command) <span class="note">used as Hammerspoon's Hyper key</span></div></div>
+    </div>
 
-  <footer class="footer">
-    Catppuccin Latte inspired. Data-driven with JSON for easy updates.
-  </footer>
+    <div class="category">
+      <h3>Profile</h3>
+      <div class="row"><div class="key"><kbd>Default</kbd></div><div class="desc">ANSI keyboard type</div></div>
+    </div>
+    </div>
+  </section>
 
-  <script src="./assets/app.js"></script>
+  <!-- ===================== HAMMERSPOON ===================== -->
+  <section class="app-section hammerspoon" id="hammerspoon">
+    <div class="app-head">
+      <h2>Hammerspoon</h2>
+    </div>
+
+    <div class="category-grid">
+    <div class="category">
+      <h3>Launcher <span style="text-transform:none; font-weight:600;">— Hyper = ⌃⌥⌘</span></h3>
+      <div class="row"><div class="key"><kbd>⌃⌥⌘W</kbd></div><div class="desc">Focus or launch WezTerm</div></div>
+      <div class="row"><div class="key"><kbd>⌃⌥⌘W</kbd></div><div class="desc">Open a new WezTerm window <span class="note">bound to the same hotkey as above</span></div></div>
+    </div>
+
+    <div class="category">
+      <h3>Window layout</h3>
+      <div class="row"><div class="key"><kbd>⌘←</kbd></div><div class="desc">Snap left half <span class="note">hops one screen east if already there</span></div></div>
+      <div class="row"><div class="key"><kbd>⌘→</kbd></div><div class="desc">Snap right half <span class="note">hops one screen west if already there</span></div></div>
+      <div class="row"><div class="key"><kbd>⌘↑</kbd></div><div class="desc">Maximize window</div></div>
+      <div class="row"><div class="key"><kbd>⌘↓</kbd></div><div class="desc">Center window <span class="note">keeps current size</span></div></div>
+    </div>
+    </div>
+  </section>
+
+  <!-- ===================== WEZTERM ===================== -->
+  <section class="app-section wezterm" id="wezterm">
+    <div class="app-head">
+      <h2>WezTerm</h2>
+    </div>
+
+    <div class="category-grid">
+    <div class="category">
+      <h3>Tabs</h3>
+      <div class="row"><div class="key"><kbd>⌃N</kbd></div><div class="desc">New tab</div></div>
+      <div class="row"><div class="key"><kbd>⌃W</kbd></div><div class="desc">Close tab <span class="note">(disabled when it's the only tab)</span></div></div>
+      <div class="row"><div class="key"><kbd>⌃←</kbd></div><div class="desc">Previous tab</div></div>
+      <div class="row"><div class="key"><kbd>⌃→</kbd></div><div class="desc">Next tab</div></div>
+    </div>
+
+    <div class="category">
+      <h3>Panes</h3>
+      <div class="row"><div class="key"><kbd>⌃,</kbd></div><div class="desc">Focus previous pane</div></div>
+      <div class="row"><div class="key"><kbd>⌃.</kbd></div><div class="desc">Focus next pane</div></div>
+      <div class="row"><div class="key"><kbd>⌃=</kbd></div><div class="desc">Split horizontally — new pane below</div></div>
+      <div class="row"><div class="key"><kbd>⌃-</kbd></div><div class="desc">Split vertically — new pane on the right</div></div>
+      <div class="row"><div class="key"><kbd>⌃Q</kbd></div><div class="desc">Close pane <span class="note">(disabled when it's the only pane)</span></div></div>
+    </div>
+
+    <div class="category">
+      <h3>Pane resize</h3>
+      <div class="row"><div class="key"><kbd>⌃⇧↑</kbd></div><div class="desc">Grow pane upward</div></div>
+      <div class="row"><div class="key"><kbd>⌃⇧↓</kbd></div><div class="desc">Grow pane downward</div></div>
+      <div class="row"><div class="key"><kbd>⌃⇧←</kbd></div><div class="desc">Grow pane leftward</div></div>
+      <div class="row"><div class="key"><kbd>⌃⇧→</kbd></div><div class="desc">Grow pane rightward</div></div>
+    </div>
+    </div>
+  </section>
+
+  <!-- ===================== NEOVIM ===================== -->
+  <section class="app-section nvim" id="nvim">
+    <div class="app-head">
+      <h2>Neovim</h2>
+    </div>
+
+    <div class="category-grid">
+    <div class="category">
+      <h3>Tabs &amp; windows</h3>
+      <div class="row"><div class="key"><kbd>⌥N</kbd></div><div class="desc">New tab</div></div>
+      <div class="row"><div class="key"><kbd>⌥W</kbd></div><div class="desc">Close tab</div></div>
+      <div class="row"><div class="key"><kbd>⌥←</kbd></div><div class="desc">Previous tab</div></div>
+      <div class="row"><div class="key"><kbd>⌥→</kbd></div><div class="desc">Next tab</div></div>
+      <div class="row"><div class="key"><kbd>⌥,</kbd></div><div class="desc">Focus previous window</div></div>
+      <div class="row"><div class="key"><kbd>⌥.</kbd></div><div class="desc">Focus next window</div></div>
+      <div class="row"><div class="key"><kbd>⌥-</kbd></div><div class="desc">Horizontal split pane</div></div>
+      <div class="row"><div class="key"><kbd>⌥=</kbd></div><div class="desc">Vertical split pane</div></div>
+      <div class="row"><div class="key"><kbd>⌥Q</kbd></div><div class="desc">Close pane</div></div>
+      <div class="row"><div class="key"><kbd>⌥⇧↑</kbd></div><div class="desc">Grow window height</div></div>
+      <div class="row"><div class="key"><kbd>⌥⇧↓</kbd></div><div class="desc">Shrink window height</div></div>
+      <div class="row"><div class="key"><kbd>⌥⇧←</kbd></div><div class="desc">Grow window width</div></div>
+      <div class="row"><div class="key"><kbd>⌥⇧→</kbd></div><div class="desc">Shrink window width</div></div>
+    </div>
+
+    <div class="category">
+      <h3>Neo-tree</h3>
+      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;e</kbd></div><div class="desc">Toggle file explorer</div></div>
+    </div>
+
+    <div class="category">
+      <h3>Find / Telescope</h3>
+      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;ff</kbd></div><div class="desc">Find files</div></div>
+      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;fg</kbd></div><div class="desc">Live grep</div></div>
+      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;fb</kbd></div><div class="desc">List buffers</div></div>
+      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;fh</kbd></div><div class="desc">Help tags</div></div>
+    </div>
+
+    <div class="category">
+      <h3>Completion <span style="text-transform:none; font-weight:600;">— insert mode</span></h3>
+      <div class="row"><div class="key"><kbd>Tab</kbd></div><div class="desc">Next completion item</div></div>
+      <div class="row"><div class="key"><kbd>⇧Tab</kbd></div><div class="desc">Previous item, or de-indent</div></div>
+      <div class="row"><div class="key"><kbd>Enter</kbd></div><div class="desc">Confirm selected completion</div></div>
+      <div class="row"><div class="key"><kbd>⌃Space</kbd></div><div class="desc">Trigger LSP completion</div></div>
+    </div>
+
+    <div class="category">
+      <h3>Debug / DAP</h3>
+      <div class="row"><div class="key"><kbd>F5</kbd></div><div class="desc">Continue</div></div>
+      <div class="row"><div class="key"><kbd>F10</kbd></div><div class="desc">Step over</div></div>
+      <div class="row"><div class="key"><kbd>F11</kbd></div><div class="desc">Step into</div></div>
+      <div class="row"><div class="key"><kbd>F12</kbd></div><div class="desc">Step out</div></div>
+      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;db</kbd></div><div class="desc">Toggle breakpoint</div></div>
+      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;dB</kbd></div><div class="desc">Conditional breakpoint</div></div>
+      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;dr</kbd></div><div class="desc">Open REPL</div></div>
+      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;dl</kbd></div><div class="desc">Run last session</div></div>
+      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;dt</kbd></div><div class="desc">Terminate session</div></div>
+      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;dv</kbd></div><div class="desc">Toggle DAP View</div></div>
+    </div>
+
+    <div class="category">
+      <h3>Terminal <span style="text-transform:none; font-weight:600;">— ToggleTerm</span></h3>
+      <div class="row"><div class="key"><kbd>Esc</kbd></div><div class="desc">Back to Normal mode <span class="note">(terminal mode)</span></div></div>
+      <div class="row"><div class="key"><kbd>⌥`</kbd></div><div class="desc">Float terminal #1</div></div>
+      <div class="row"><div class="key"><kbd>⌥\</kbd></div><div class="desc">Vertical terminal #2</div></div>
+      <div class="row"><div class="key"><kbd>⌥;</kbd></div><div class="desc">Horizontal terminal #3</div></div>
+      <div class="row"><div class="key"><kbd>⌥'</kbd></div><div class="desc">Horizontal terminal #4</div></div>
+    </div>
+
+    <div class="category">
+      <h3>Trouble / Todo</h3>
+      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;td</kbd></div><div class="desc">Diagnostics (workspace)</div></div>
+      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;tD</kbd></div><div class="desc">Diagnostics (current buffer)</div></div>
+      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;tl</kbd></div><div class="desc">LSP references / definitions</div></div>
+      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;tL</kbd></div><div class="desc">Location list</div></div>
+      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;ts</kbd></div><div class="desc">Document symbols</div></div>
+      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;tq</kbd></div><div class="desc">Quickfix list</div></div>
+      <div class="row"><div class="key"><kbd>]t</kbd></div><div class="desc">Jump to next Todo comment</div></div>
+      <div class="row"><div class="key"><kbd>[t</kbd></div><div class="desc">Jump to previous Todo comment</div></div>
+      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;tt</kbd></div><div class="desc">Todo list in Trouble</div></div>
+      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;tT</kbd></div><div class="desc">Todo list in Telescope</div></div>
+    </div>
+
+    <div class="category">
+      <h3>Snippets <span style="text-transform:none; font-weight:600;">— LuaSnip, insert mode</span></h3>
+      <div class="row"><div class="key"><kbd>⌥/</kbd></div><div class="desc">Expand snippet at cursor</div></div>
+    </div>
+
+    <div class="category">
+      <h3>Markdown</h3>
+      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;mt</kbd></div><div class="desc">Toggle render-markdown</div></div>
+      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;mn</kbd></div><div class="desc">Toggle for current buffer only</div></div>
+      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;mc</kbd></div><div class="desc">Open render-markdown config</div></div>
+    </div>
+
+    <div class="category">
+      <h3>Neogen</h3>
+      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;nf</kbd></div><div class="desc">Generate function doc</div></div>
+      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;nc</kbd></div><div class="desc">Generate class doc</div></div>
+      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;nt</kbd></div><div class="desc">Generate type doc</div></div>
+      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;nF</kbd></div><div class="desc">Generate file doc</div></div>
+    </div>
+
+    <div class="category">
+      <h3>Update</h3>
+      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;uv</kbd></div><div class="desc">Open Pack Manager (<span class="mono">vim.pack</span>)</div></div>
+      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;um</kbd></div><div class="desc">Open Mason</div></div>
+      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;uh</kbd></div><div class="desc">Run <span class="mono">:checkhealth</span></div></div>
+    </div>
+
+    <div class="category">
+      <h3>Pack Manager <span style="text-transform:none; font-weight:600;">— inside the <span class="mono">&lt;leader&gt;uv</span> window</span></h3>
+      <div class="row"><div class="key"><kbd>r</kbd></div><div class="desc">Refresh list and check for updates</div></div>
+      <div class="row"><div class="key"><kbd>gc</kbd></div><div class="desc">Check updates for the selected plugin</div></div>
+      <div class="row"><div class="key"><kbd>u</kbd></div><div class="desc">Apply update for the selected plugin</div></div>
+      <div class="row"><div class="key"><kbd>U</kbd></div><div class="desc">Apply all pending updates</div></div>
+      <div class="row"><div class="key"><kbd>o</kbd></div><div class="desc">Open plugin source in the browser</div></div>
+      <div class="row"><div class="key"><kbd>q</kbd> <kbd>Esc</kbd></div><div class="desc">Close the window</div></div>
+    </div>
+
+    <div class="category">
+      <h3>DiffView</h3>
+      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;vo</kbd></div><div class="desc">Open diff view</div></div>
+      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;vc</kbd></div><div class="desc">Close diff view</div></div>
+      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;vh</kbd></div><div class="desc">File history for current buffer</div></div>
+    </div>
+    </div>
+  </section>
+
+</main>
+
 </body>
 </html>

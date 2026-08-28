@@ -1,6 +1,6 @@
 # Keyboard Shortcuts Dashboard
 
-A Catppuccin Latte inspired shortcut dashboard for:
+A Catppuccin Latte inspired shortcut reference for:
 
 1. Karabiner-Elements
 2. Hammerspoon
@@ -12,35 +12,28 @@ A Catppuccin Latte inspired shortcut dashboard for:
 ```text
 .
 ├── index.html
-├── assets
-│   ├── app.js
-│   ├── shortcuts.json
-│   └── style.css
 └── README.md
 ```
 
+A single self-contained HTML file — no build step, no JS, no fetch.
+
 ## Update shortcuts
 
-Edit:
-
-```text
-assets/shortcuts.json
-```
+Edit the markup directly in `index.html`; each app is a `<section>` with
+one `<div class="category">` card per shortcut group.
 
 Then commit and push.
 
 ## Run locally
 
-Because the page uses `fetch()` to load JSON, use a small local server:
+```sh
+open index.html
+```
+
+Or serve it if you prefer:
 
 ```sh
 python3 -m http.server 8000
-```
-
-Open:
-
-```text
-http://localhost:8000
 ```
 
 ## Publish to GitHub Pages
