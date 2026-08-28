@@ -209,19 +209,23 @@
     background: var(--bg-mantle);
   }
 
-  .row {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 11px 20px;
-    border-bottom: 1px solid var(--border-soft);
+  .category table {
+    width: 100%;
+    border-collapse: collapse;
   }
 
-  .row:last-child { border-bottom: none; }
+  .category td {
+    padding: 11px 20px;
+    border-bottom: 1px solid var(--border-soft);
+    vertical-align: middle;
+  }
+
+  .category tr:last-child td { border-bottom: none; }
 
   .key {
-    flex: 0 0 auto;
-    min-width: 120px;
+    width: 1%;
+    white-space: nowrap;
+    padding-right: 8px;
   }
 
   kbd {
@@ -240,12 +244,10 @@
   .hammerspoon kbd { color: var(--accent-hammerspoon); border-color: var(--accent-hammerspoon-soft); }
   .wezterm kbd { color: var(--accent-wezterm); border-color: var(--accent-wezterm-soft); }
   .nvim kbd { color: var(--accent-nvim); border-color: var(--accent-nvim-soft); }
-  .row .key kbd.leader { color: var(--accent-key); }
+  .key kbd.leader { color: var(--accent-key); }
 
   .desc {
-    flex: 1 1 auto;
     font-size: 0.94rem;
-    min-width: 0;
   }
 
   .desc .note {
@@ -255,8 +257,7 @@
   }
 
   @media (max-width: 560px) {
-    .row { flex-wrap: wrap; }
-    .key { min-width: 0; }
+    .key { white-space: normal; width: auto; }
     .topnav .brand { display: none; }
   }
 </style>
@@ -294,7 +295,9 @@
     <div class="category-grid">
     <div class="category">
       <h3>Modifier remap</h3>
-      <div class="row"><div class="key"><kbd>Caps Lock</kbd></div><div class="desc">Remaps to ⌃⌥⌘ (Control + Option + Command) <span class="note">used as Hammerspoon's Hyper key</span></div></div>
+      <table><tbody>
+      <tr><td class="key"><kbd>Caps Lock</kbd></td><td class="desc">Remaps to ⌃⌥⌘ (Control + Option + Command) <span class="note">used as Hammerspoon's Hyper key</span></td></tr>
+      </tbody></table>
     </div>
     </div>
   </section>
@@ -308,16 +311,20 @@
     <div class="category-grid">
     <div class="category">
       <h3>Launcher <span style="text-transform:none; font-weight:600;">— Hyper = ⌃⌥⌘</span></h3>
-      <div class="row"><div class="key"><kbd>⌃⌥⌘W</kbd></div><div class="desc">Focus or launch WezTerm</div></div>
-      <div class="row"><div class="key"><kbd>⌃⌥⌘W</kbd></div><div class="desc">Open a new WezTerm window <span class="note">bound to the same hotkey as above</span></div></div>
+      <table><tbody>
+      <tr><td class="key"><kbd>⌃⌥⌘W</kbd></td><td class="desc">Focus or launch WezTerm</td></tr>
+      <tr><td class="key"><kbd>⌃⌥⌘W</kbd></td><td class="desc">Open a new WezTerm window <span class="note">bound to the same hotkey as above</span></td></tr>
+      </tbody></table>
     </div>
 
     <div class="category">
       <h3>Window layout</h3>
-      <div class="row"><div class="key"><kbd>⌘←</kbd></div><div class="desc">Snap left half <span class="note">hops one screen east if already there</span></div></div>
-      <div class="row"><div class="key"><kbd>⌘→</kbd></div><div class="desc">Snap right half <span class="note">hops one screen west if already there</span></div></div>
-      <div class="row"><div class="key"><kbd>⌘↑</kbd></div><div class="desc">Maximize window</div></div>
-      <div class="row"><div class="key"><kbd>⌘↓</kbd></div><div class="desc">Center window <span class="note">keeps current size</span></div></div>
+      <table><tbody>
+      <tr><td class="key"><kbd>⌘←</kbd></td><td class="desc">Snap left half <span class="note">hops one screen east if already there</span></td></tr>
+      <tr><td class="key"><kbd>⌘→</kbd></td><td class="desc">Snap right half <span class="note">hops one screen west if already there</span></td></tr>
+      <tr><td class="key"><kbd>⌘↑</kbd></td><td class="desc">Maximize window</td></tr>
+      <tr><td class="key"><kbd>⌘↓</kbd></td><td class="desc">Center window <span class="note">keeps current size</span></td></tr>
+      </tbody></table>
     </div>
     </div>
   </section>
@@ -331,27 +338,33 @@
     <div class="category-grid">
     <div class="category">
       <h3>Tabs</h3>
-      <div class="row"><div class="key"><kbd>⌃N</kbd></div><div class="desc">New tab</div></div>
-      <div class="row"><div class="key"><kbd>⌃W</kbd></div><div class="desc">Close tab <span class="note">(disabled when it's the only tab)</span></div></div>
-      <div class="row"><div class="key"><kbd>⌃←</kbd></div><div class="desc">Previous tab</div></div>
-      <div class="row"><div class="key"><kbd>⌃→</kbd></div><div class="desc">Next tab</div></div>
+      <table><tbody>
+      <tr><td class="key"><kbd>⌃N</kbd></td><td class="desc">New tab</td></tr>
+      <tr><td class="key"><kbd>⌃W</kbd></td><td class="desc">Close tab <span class="note">(disabled when it's the only tab)</span></td></tr>
+      <tr><td class="key"><kbd>⌃←</kbd></td><td class="desc">Previous tab</td></tr>
+      <tr><td class="key"><kbd>⌃→</kbd></td><td class="desc">Next tab</td></tr>
+      </tbody></table>
     </div>
 
     <div class="category">
       <h3>Panes</h3>
-      <div class="row"><div class="key"><kbd>⌃,</kbd></div><div class="desc">Focus previous pane</div></div>
-      <div class="row"><div class="key"><kbd>⌃.</kbd></div><div class="desc">Focus next pane</div></div>
-      <div class="row"><div class="key"><kbd>⌃=</kbd></div><div class="desc">Split horizontally — new pane below</div></div>
-      <div class="row"><div class="key"><kbd>⌃-</kbd></div><div class="desc">Split vertically — new pane on the right</div></div>
-      <div class="row"><div class="key"><kbd>⌃Q</kbd></div><div class="desc">Close pane <span class="note">(disabled when it's the only pane)</span></div></div>
+      <table><tbody>
+      <tr><td class="key"><kbd>⌃,</kbd></td><td class="desc">Focus previous pane</td></tr>
+      <tr><td class="key"><kbd>⌃.</kbd></td><td class="desc">Focus next pane</td></tr>
+      <tr><td class="key"><kbd>⌃=</kbd></td><td class="desc">Split horizontally — new pane below</td></tr>
+      <tr><td class="key"><kbd>⌃-</kbd></td><td class="desc">Split vertically — new pane on the right</td></tr>
+      <tr><td class="key"><kbd>⌃Q</kbd></td><td class="desc">Close pane <span class="note">(disabled when it's the only pane)</span></td></tr>
+      </tbody></table>
     </div>
 
     <div class="category">
       <h3>Pane resize</h3>
-      <div class="row"><div class="key"><kbd>⌃⇧↑</kbd></div><div class="desc">Grow pane upward</div></div>
-      <div class="row"><div class="key"><kbd>⌃⇧↓</kbd></div><div class="desc">Grow pane downward</div></div>
-      <div class="row"><div class="key"><kbd>⌃⇧←</kbd></div><div class="desc">Grow pane leftward</div></div>
-      <div class="row"><div class="key"><kbd>⌃⇧→</kbd></div><div class="desc">Grow pane rightward</div></div>
+      <table><tbody>
+      <tr><td class="key"><kbd>⌃⇧↑</kbd></td><td class="desc">Grow pane upward</td></tr>
+      <tr><td class="key"><kbd>⌃⇧↓</kbd></td><td class="desc">Grow pane downward</td></tr>
+      <tr><td class="key"><kbd>⌃⇧←</kbd></td><td class="desc">Grow pane leftward</td></tr>
+      <tr><td class="key"><kbd>⌃⇧→</kbd></td><td class="desc">Grow pane rightward</td></tr>
+      </tbody></table>
     </div>
     </div>
   </section>
@@ -365,133 +378,165 @@
     <div class="category-grid">
     <div class="category">
       <h3>Tabs</h3>
-      <div class="row"><div class="key"><kbd>⌥N</kbd></div><div class="desc">New tab</div></div>
-      <div class="row"><div class="key"><kbd>⌥W</kbd></div><div class="desc">Close tab</div></div>
-      <div class="row"><div class="key"><kbd>⌥←</kbd></div><div class="desc">Previous tab</div></div>
-      <div class="row"><div class="key"><kbd>⌥→</kbd></div><div class="desc">Next tab</div></div>
+      <table><tbody>
+      <tr><td class="key"><kbd>⌥N</kbd></td><td class="desc">New tab</td></tr>
+      <tr><td class="key"><kbd>⌥W</kbd></td><td class="desc">Close tab</td></tr>
+      <tr><td class="key"><kbd>⌥←</kbd></td><td class="desc">Previous tab</td></tr>
+      <tr><td class="key"><kbd>⌥→</kbd></td><td class="desc">Next tab</td></tr>
+      </tbody></table>
     </div>
 
     <div class="category">
       <h3>Windows</h3>
-      <div class="row"><div class="key"><kbd>⌥,</kbd></div><div class="desc">Focus previous window</div></div>
-      <div class="row"><div class="key"><kbd>⌥.</kbd></div><div class="desc">Focus next window</div></div>
-      <div class="row"><div class="key"><kbd>⌥-</kbd></div><div class="desc">Horizontal split pane</div></div>
-      <div class="row"><div class="key"><kbd>⌥=</kbd></div><div class="desc">Vertical split pane</div></div>
-      <div class="row"><div class="key"><kbd>⌥Q</kbd></div><div class="desc">Close pane</div></div>
+      <table><tbody>
+      <tr><td class="key"><kbd>⌥,</kbd></td><td class="desc">Focus previous window</td></tr>
+      <tr><td class="key"><kbd>⌥.</kbd></td><td class="desc">Focus next window</td></tr>
+      <tr><td class="key"><kbd>⌥-</kbd></td><td class="desc">Horizontal split pane</td></tr>
+      <tr><td class="key"><kbd>⌥=</kbd></td><td class="desc">Vertical split pane</td></tr>
+      <tr><td class="key"><kbd>⌥Q</kbd></td><td class="desc">Close pane</td></tr>
+      </tbody></table>
     </div>
 
     <div class="category">
       <h3>Window resize</h3>
-      <div class="row"><div class="key"><kbd>⌥⇧↑</kbd></div><div class="desc">Grow window height</div></div>
-      <div class="row"><div class="key"><kbd>⌥⇧↓</kbd></div><div class="desc">Shrink window height</div></div>
-      <div class="row"><div class="key"><kbd>⌥⇧←</kbd></div><div class="desc">Grow window width</div></div>
-      <div class="row"><div class="key"><kbd>⌥⇧→</kbd></div><div class="desc">Shrink window width</div></div>
+      <table><tbody>
+      <tr><td class="key"><kbd>⌥⇧↑</kbd></td><td class="desc">Grow window height</td></tr>
+      <tr><td class="key"><kbd>⌥⇧↓</kbd></td><td class="desc">Shrink window height</td></tr>
+      <tr><td class="key"><kbd>⌥⇧←</kbd></td><td class="desc">Grow window width</td></tr>
+      <tr><td class="key"><kbd>⌥⇧→</kbd></td><td class="desc">Shrink window width</td></tr>
+      </tbody></table>
     </div>
 
     <div class="category">
       <h3>Neo-tree</h3>
-      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;e</kbd></div><div class="desc">Toggle file explorer</div></div>
+      <table><tbody>
+      <tr><td class="key"><kbd class="leader mono">&lt;leader&gt;e</kbd></td><td class="desc">Toggle file explorer</td></tr>
+      </tbody></table>
     </div>
 
     <div class="category">
       <h3>Find / Telescope</h3>
-      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;ff</kbd></div><div class="desc">Find files</div></div>
-      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;fg</kbd></div><div class="desc">Live grep</div></div>
-      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;fb</kbd></div><div class="desc">List buffers</div></div>
-      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;fh</kbd></div><div class="desc">Help tags</div></div>
+      <table><tbody>
+      <tr><td class="key"><kbd class="leader mono">&lt;leader&gt;ff</kbd></td><td class="desc">Find files</td></tr>
+      <tr><td class="key"><kbd class="leader mono">&lt;leader&gt;fg</kbd></td><td class="desc">Live grep</td></tr>
+      <tr><td class="key"><kbd class="leader mono">&lt;leader&gt;fb</kbd></td><td class="desc">List buffers</td></tr>
+      <tr><td class="key"><kbd class="leader mono">&lt;leader&gt;fh</kbd></td><td class="desc">Help tags</td></tr>
+      </tbody></table>
     </div>
 
     <div class="category">
       <h3>Completion <span style="text-transform:none; font-weight:600;">— insert mode</span></h3>
-      <div class="row"><div class="key"><kbd>Tab</kbd></div><div class="desc">Next completion item</div></div>
-      <div class="row"><div class="key"><kbd>⇧Tab</kbd></div><div class="desc">Previous item, or de-indent</div></div>
-      <div class="row"><div class="key"><kbd>Enter</kbd></div><div class="desc">Confirm selected completion</div></div>
-      <div class="row"><div class="key"><kbd>⌃Space</kbd></div><div class="desc">Trigger LSP completion</div></div>
+      <table><tbody>
+      <tr><td class="key"><kbd>Tab</kbd></td><td class="desc">Next completion item</td></tr>
+      <tr><td class="key"><kbd>⇧Tab</kbd></td><td class="desc">Previous item, or de-indent</td></tr>
+      <tr><td class="key"><kbd>Enter</kbd></td><td class="desc">Confirm selected completion</td></tr>
+      <tr><td class="key"><kbd>⌃Space</kbd></td><td class="desc">Trigger LSP completion</td></tr>
+      </tbody></table>
     </div>
 
     <div class="category">
       <h3>Debug / DAP</h3>
-      <div class="row"><div class="key"><kbd>F5</kbd></div><div class="desc">Continue</div></div>
-      <div class="row"><div class="key"><kbd>F10</kbd></div><div class="desc">Step over</div></div>
-      <div class="row"><div class="key"><kbd>F11</kbd></div><div class="desc">Step into</div></div>
-      <div class="row"><div class="key"><kbd>F12</kbd></div><div class="desc">Step out</div></div>
-      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;db</kbd></div><div class="desc">Toggle breakpoint</div></div>
-      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;dB</kbd></div><div class="desc">Conditional breakpoint</div></div>
-      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;dr</kbd></div><div class="desc">Open REPL</div></div>
-      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;dl</kbd></div><div class="desc">Run last session</div></div>
-      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;dt</kbd></div><div class="desc">Terminate session</div></div>
-      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;dv</kbd></div><div class="desc">Toggle DAP View</div></div>
+      <table><tbody>
+      <tr><td class="key"><kbd>F5</kbd></td><td class="desc">Continue</td></tr>
+      <tr><td class="key"><kbd>F10</kbd></td><td class="desc">Step over</td></tr>
+      <tr><td class="key"><kbd>F11</kbd></td><td class="desc">Step into</td></tr>
+      <tr><td class="key"><kbd>F12</kbd></td><td class="desc">Step out</td></tr>
+      <tr><td class="key"><kbd class="leader mono">&lt;leader&gt;db</kbd></td><td class="desc">Toggle breakpoint</td></tr>
+      <tr><td class="key"><kbd class="leader mono">&lt;leader&gt;dB</kbd></td><td class="desc">Conditional breakpoint</td></tr>
+      <tr><td class="key"><kbd class="leader mono">&lt;leader&gt;dr</kbd></td><td class="desc">Open REPL</td></tr>
+      <tr><td class="key"><kbd class="leader mono">&lt;leader&gt;dl</kbd></td><td class="desc">Run last session</td></tr>
+      <tr><td class="key"><kbd class="leader mono">&lt;leader&gt;dt</kbd></td><td class="desc">Terminate session</td></tr>
+      <tr><td class="key"><kbd class="leader mono">&lt;leader&gt;dv</kbd></td><td class="desc">Toggle DAP View</td></tr>
+      </tbody></table>
     </div>
 
     <div class="category">
       <h3>Terminal <span style="text-transform:none; font-weight:600;">— ToggleTerm</span></h3>
-      <div class="row"><div class="key"><kbd>Esc</kbd></div><div class="desc">Back to Normal mode <span class="note">(terminal mode)</span></div></div>
-      <div class="row"><div class="key"><kbd>⌥`</kbd></div><div class="desc">Float terminal #1</div></div>
-      <div class="row"><div class="key"><kbd>⌥\</kbd></div><div class="desc">Vertical terminal #2</div></div>
-      <div class="row"><div class="key"><kbd>⌥;</kbd></div><div class="desc">Horizontal terminal #3</div></div>
-      <div class="row"><div class="key"><kbd>⌥'</kbd></div><div class="desc">Horizontal terminal #4</div></div>
+      <table><tbody>
+      <tr><td class="key"><kbd>Esc</kbd></td><td class="desc">Back to Normal mode <span class="note">(terminal mode)</span></td></tr>
+      <tr><td class="key"><kbd>⌥`</kbd></td><td class="desc">Float terminal #1</td></tr>
+      <tr><td class="key"><kbd>⌥\</kbd></td><td class="desc">Vertical terminal #2</td></tr>
+      <tr><td class="key"><kbd>⌥;</kbd></td><td class="desc">Horizontal terminal #3</td></tr>
+      <tr><td class="key"><kbd>⌥'</kbd></td><td class="desc">Horizontal terminal #4</td></tr>
+      </tbody></table>
     </div>
 
     <div class="category">
       <h3>Trouble</h3>
-      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;td</kbd></div><div class="desc">Diagnostics (workspace)</div></div>
-      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;tD</kbd></div><div class="desc">Diagnostics (current buffer)</div></div>
-      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;tl</kbd></div><div class="desc">LSP references / definitions</div></div>
-      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;tL</kbd></div><div class="desc">Location list</div></div>
-      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;ts</kbd></div><div class="desc">Document symbols</div></div>
-      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;tq</kbd></div><div class="desc">Quickfix list</div></div>
+      <table><tbody>
+      <tr><td class="key"><kbd class="leader mono">&lt;leader&gt;td</kbd></td><td class="desc">Diagnostics (workspace)</td></tr>
+      <tr><td class="key"><kbd class="leader mono">&lt;leader&gt;tD</kbd></td><td class="desc">Diagnostics (current buffer)</td></tr>
+      <tr><td class="key"><kbd class="leader mono">&lt;leader&gt;tl</kbd></td><td class="desc">LSP references / definitions</td></tr>
+      <tr><td class="key"><kbd class="leader mono">&lt;leader&gt;tL</kbd></td><td class="desc">Location list</td></tr>
+      <tr><td class="key"><kbd class="leader mono">&lt;leader&gt;ts</kbd></td><td class="desc">Document symbols</td></tr>
+      <tr><td class="key"><kbd class="leader mono">&lt;leader&gt;tq</kbd></td><td class="desc">Quickfix list</td></tr>
+      </tbody></table>
     </div>
 
     <div class="category">
       <h3>Todo Comments</h3>
-      <div class="row"><div class="key"><kbd>]t</kbd></div><div class="desc">Jump to next Todo comment</div></div>
-      <div class="row"><div class="key"><kbd>[t</kbd></div><div class="desc">Jump to previous Todo comment</div></div>
-      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;tt</kbd></div><div class="desc">Todo list in Trouble</div></div>
-      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;tT</kbd></div><div class="desc">Todo list in Telescope</div></div>
+      <table><tbody>
+      <tr><td class="key"><kbd>]t</kbd></td><td class="desc">Jump to next Todo comment</td></tr>
+      <tr><td class="key"><kbd>[t</kbd></td><td class="desc">Jump to previous Todo comment</td></tr>
+      <tr><td class="key"><kbd class="leader mono">&lt;leader&gt;tt</kbd></td><td class="desc">Todo list in Trouble</td></tr>
+      <tr><td class="key"><kbd class="leader mono">&lt;leader&gt;tT</kbd></td><td class="desc">Todo list in Telescope</td></tr>
+      </tbody></table>
     </div>
 
     <div class="category">
       <h3>Snippets <span style="text-transform:none; font-weight:600;">— LuaSnip, insert mode</span></h3>
-      <div class="row"><div class="key"><kbd>⌥/</kbd></div><div class="desc">Expand snippet at cursor</div></div>
+      <table><tbody>
+      <tr><td class="key"><kbd>⌥/</kbd></td><td class="desc">Expand snippet at cursor</td></tr>
+      </tbody></table>
     </div>
 
     <div class="category">
       <h3>Markdown</h3>
-      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;mt</kbd></div><div class="desc">Toggle render-markdown</div></div>
-      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;mn</kbd></div><div class="desc">Toggle for current buffer only</div></div>
-      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;mc</kbd></div><div class="desc">Open render-markdown config</div></div>
+      <table><tbody>
+      <tr><td class="key"><kbd class="leader mono">&lt;leader&gt;mt</kbd></td><td class="desc">Toggle render-markdown</td></tr>
+      <tr><td class="key"><kbd class="leader mono">&lt;leader&gt;mn</kbd></td><td class="desc">Toggle for current buffer only</td></tr>
+      <tr><td class="key"><kbd class="leader mono">&lt;leader&gt;mc</kbd></td><td class="desc">Open render-markdown config</td></tr>
+      </tbody></table>
     </div>
 
     <div class="category">
       <h3>Neogen</h3>
-      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;nf</kbd></div><div class="desc">Generate function doc</div></div>
-      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;nc</kbd></div><div class="desc">Generate class doc</div></div>
-      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;nt</kbd></div><div class="desc">Generate type doc</div></div>
-      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;nF</kbd></div><div class="desc">Generate file doc</div></div>
+      <table><tbody>
+      <tr><td class="key"><kbd class="leader mono">&lt;leader&gt;nf</kbd></td><td class="desc">Generate function doc</td></tr>
+      <tr><td class="key"><kbd class="leader mono">&lt;leader&gt;nc</kbd></td><td class="desc">Generate class doc</td></tr>
+      <tr><td class="key"><kbd class="leader mono">&lt;leader&gt;nt</kbd></td><td class="desc">Generate type doc</td></tr>
+      <tr><td class="key"><kbd class="leader mono">&lt;leader&gt;nF</kbd></td><td class="desc">Generate file doc</td></tr>
+      </tbody></table>
     </div>
 
     <div class="category">
       <h3>Update</h3>
-      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;uv</kbd></div><div class="desc">Open Pack Manager (<span class="mono">vim.pack</span>)</div></div>
-      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;um</kbd></div><div class="desc">Open Mason</div></div>
-      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;uh</kbd></div><div class="desc">Run <span class="mono">:checkhealth</span></div></div>
+      <table><tbody>
+      <tr><td class="key"><kbd class="leader mono">&lt;leader&gt;uv</kbd></td><td class="desc">Open Pack Manager (<span class="mono">vim.pack</span>)</td></tr>
+      <tr><td class="key"><kbd class="leader mono">&lt;leader&gt;um</kbd></td><td class="desc">Open Mason</td></tr>
+      <tr><td class="key"><kbd class="leader mono">&lt;leader&gt;uh</kbd></td><td class="desc">Run <span class="mono">:checkhealth</span></td></tr>
+      </tbody></table>
     </div>
 
     <div class="category">
       <h3>Pack Manager <span style="text-transform:none; font-weight:600;">— inside the <span class="mono">&lt;leader&gt;uv</span> window</span></h3>
-      <div class="row"><div class="key"><kbd>r</kbd></div><div class="desc">Refresh list and check for updates</div></div>
-      <div class="row"><div class="key"><kbd>gc</kbd></div><div class="desc">Check updates for the selected plugin</div></div>
-      <div class="row"><div class="key"><kbd>u</kbd></div><div class="desc">Apply update for the selected plugin</div></div>
-      <div class="row"><div class="key"><kbd>U</kbd></div><div class="desc">Apply all pending updates</div></div>
-      <div class="row"><div class="key"><kbd>o</kbd></div><div class="desc">Open plugin source in the browser</div></div>
-      <div class="row"><div class="key"><kbd>q</kbd> <kbd>Esc</kbd></div><div class="desc">Close the window</div></div>
+      <table><tbody>
+      <tr><td class="key"><kbd>r</kbd></td><td class="desc">Refresh list and check for updates</td></tr>
+      <tr><td class="key"><kbd>gc</kbd></td><td class="desc">Check updates for the selected plugin</td></tr>
+      <tr><td class="key"><kbd>u</kbd></td><td class="desc">Apply update for the selected plugin</td></tr>
+      <tr><td class="key"><kbd>U</kbd></td><td class="desc">Apply all pending updates</td></tr>
+      <tr><td class="key"><kbd>o</kbd></td><td class="desc">Open plugin source in the browser</td></tr>
+      <tr><td class="key"><kbd>q</kbd> <kbd>Esc</kbd></td><td class="desc">Close the window</td></tr>
+      </tbody></table>
     </div>
 
     <div class="category">
       <h3>DiffView</h3>
-      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;vo</kbd></div><div class="desc">Open diff view</div></div>
-      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;vc</kbd></div><div class="desc">Close diff view</div></div>
-      <div class="row"><div class="key"><kbd class="leader mono">&lt;leader&gt;vh</kbd></div><div class="desc">File history for current buffer</div></div>
+      <table><tbody>
+      <tr><td class="key"><kbd class="leader mono">&lt;leader&gt;vo</kbd></td><td class="desc">Open diff view</td></tr>
+      <tr><td class="key"><kbd class="leader mono">&lt;leader&gt;vc</kbd></td><td class="desc">Close diff view</td></tr>
+      <tr><td class="key"><kbd class="leader mono">&lt;leader&gt;vh</kbd></td><td class="desc">File history for current buffer</td></tr>
+      </tbody></table>
     </div>
     </div>
   </section>
