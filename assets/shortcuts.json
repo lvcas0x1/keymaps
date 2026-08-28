@@ -1,7 +1,7 @@
 {
   "title": "Keyboard Shortcuts Dashboard",
   "subtitle": "Karabiner → Hammerspoon → WezTerm → Neovim",
-  "updated": "2026-06-15",
+  "updated": "2026-08-28",
   "systems": [
     {
       "id": "karabiner",
@@ -202,17 +202,6 @@
                 "→"
               ],
               "action": "Resize Right"
-            }
-          ]
-        },
-        {
-          "name": "Forwarded Option Keys",
-          "items": [
-            {
-              "keys": [
-                "Option"
-              ],
-              "action": "Forwarded to Neovim for editor tab, window, split, resize, LuaSnip, and ToggleTerm operations"
             }
           ]
         }
@@ -697,6 +686,90 @@
                 "H"
               ],
               "action": "CheckHealth"
+            }
+          ]
+        },
+        {
+          "name": "DiffView",
+          "items": [
+            {
+              "keys": [
+                "Space",
+                "V",
+                "O"
+              ],
+              "action": "Open Diff View"
+            },
+            {
+              "keys": [
+                "Space",
+                "V",
+                "C"
+              ],
+              "action": "Close Diff View"
+            },
+            {
+              "keys": [
+                "Space",
+                "V",
+                "H"
+              ],
+              "action": "File History (Current Buffer)"
+            }
+          ]
+        },
+        {
+          "name": "Pack Manager",
+          "items": [
+            {
+              "keys": [
+                "R"
+              ],
+              "action": "Refresh List & Check Updates",
+              "note": "Inside the Space U V window"
+            },
+            {
+              "keys": [
+                "G",
+                "C"
+              ],
+              "action": "Check Updates (Selected)",
+              "note": "Inside the Space U V window"
+            },
+            {
+              "keys": [
+                "U"
+              ],
+              "action": "Apply Update (Selected)",
+              "note": "Inside the Space U V window"
+            },
+            {
+              "keys": [
+                "Shift+U"
+              ],
+              "action": "Apply All Pending Updates",
+              "note": "Inside the Space U V window"
+            },
+            {
+              "keys": [
+                "O"
+              ],
+              "action": "Open Plugin Source",
+              "note": "Inside the Space U V window"
+            },
+            {
+              "keys": [
+                "Q"
+              ],
+              "action": "Close Window",
+              "note": "Inside the Space U V window"
+            },
+            {
+              "keys": [
+                "Esc"
+              ],
+              "action": "Close Window",
+              "note": "Inside the Space U V window"
             }
           ]
         }
